@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/bvjustin/aws-sdk-objc.git',
                      :tag => s.version}
   s.requires_arc = true
-  s.dependency 'AWSCore', '2.6.11'
+  s.dependency 'AWSCore', '2.6.18'
   s.source_files = 'AWSS3/*.{h,m}'
 end
