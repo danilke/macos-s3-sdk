@@ -224,10 +224,6 @@ typedef NS_ENUM(NSInteger, AWSServiceType) {
      *  AWS Security Token Service (STS)
      */
     AWSServiceSTS NS_SWIFT_NAME(STS),
-    /**
-     *  Amazon Transcribe
-     */
-    AWSServiceTranscribe NS_SWIFT_NAME(Transcribe),
 };
 
 #endif
