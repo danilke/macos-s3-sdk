@@ -58,16 +58,15 @@ static NSString *const AWSInfoIdentityManager = @"IdentityManager";
             NSData *data = [NSData dataWithContentsOfFile:pathToAWSConfigJson];
             if (!data) {
                 AWSDDLogError(@"Couldn't read the awsconfiguration.json file. Skipping load of awsconfiguration.json.");
+            }
+            NSError *error = nil;
+            NSDictionary <NSString *, id> *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                                            options:kNilOptions
+                                                                                              error:&error];
+            if (!jsonDictionary || [jsonDictionary count] <= 0 || error) {
+                AWSDDLogError(@"Couldn't deserialize data from the JSON file or the contents are empty. Please check the awsconfiguration.json file.");
             } else {
-                NSError *error = nil;
-                NSDictionary <NSString *, id> *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                                                options:kNilOptions
-                                                                                                  error:&error];
-                if (!jsonDictionary || [jsonDictionary count] <= 0 || error) {
-                    AWSDDLogError(@"Couldn't deserialize data from the JSON file or the contents are empty. Please check the awsconfiguration.json file.");
-                } else {
-                    _rootInfoDictionary = jsonDictionary;
-                }
+                _rootInfoDictionary = jsonDictionary;
             }
             
         } else {
