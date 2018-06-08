@@ -15,13 +15,13 @@
 
 #import "AWSService.h"
 
-#import "AWSDevice.h"
+#import <UIKit/UIKit.h>
 #import "AWSSynchronizedMutableDictionary.h"
 #import "AWSURLResponseSerialization.h"
 #import "AWSCocoaLumberjack.h"
 #import "AWSCategory.h"
 
-NSString *const AWSiOSSDKVersion = @"2.6.11";
+NSString *const AWSiOSSDKVersion = @"2.6.21";
 NSString *const AWSServiceErrorDomain = @"com.amazonaws.AWSServiceErrorDomain";
 
 static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
@@ -93,7 +93,7 @@ static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
 - (void)setDefaultServiceConfiguration:(AWSServiceConfiguration *)defaultServiceConfiguration {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _defaultServiceConfiguration = [defaultServiceConfiguration copy];
+        self->_defaultServiceConfiguration = [defaultServiceConfiguration copy];
     });
 }
 
@@ -142,11 +142,11 @@ static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
     static NSString *_userAgent = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-		NSString *systemName = [[[AWSDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+        NSString *systemName = [[[UIDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         if (!systemName) {
             systemName = AWSServiceConfigurationUnknown;
         }
-		NSString *systemVersion = [[AWSDevice currentDevice] systemVersion];
+        NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
         if (!systemVersion) {
             systemVersion = AWSServiceConfigurationUnknown;
         }
@@ -264,6 +264,9 @@ static NSString *const AWSServiceNameSimpleDB = @"sdb";
 static NSString *const AWSServiceNameSNS = @"sns";
 static NSString *const AWSServiceNameSQS = @"sqs";
 static NSString *const AWSServiceNameSTS = @"sts";
+static NSString *const AWSServiceNameTranscribe = @"transcribe";
+static NSString *const AWSServiceNameTranslate = @"translate";
+static NSString *const AWSServiceNameComprehend = @"comprehend";
 
 @interface AWSEndpoint()
 
@@ -466,6 +469,12 @@ static NSString *const AWSServiceNameSTS = @"sts";
             return AWSServiceNameSQS;
         case AWSServiceSTS:
             return AWSServiceNameSTS;
+        case AWSServiceTranscribe:
+            return AWSServiceNameTranscribe;
+        case AWSServiceTranslate:
+            return AWSServiceNameTranslate;
+        case AWSServiceComprehend:
+            return AWSServiceNameComprehend;
         default:
             return nil;
     }
