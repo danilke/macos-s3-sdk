@@ -14,7 +14,6 @@
 //
 
 #import "AWSNetworking.h"
-#import <UIKit/UIKit.h>
 #import "AWSBolts.h"
 #import "AWSCategory.h"
 #import "AWSModel.h"
@@ -67,6 +66,15 @@ NSString *const AWSNetworkingErrorDomain = @"com.amazonaws.AWSNetworkingErrorDom
 @end
 
 @implementation AWSNetworking
+
+- (void)dealloc
+{
+    //networkManager will never be dealloc'ed if session had not been invalidated.
+    NSURLSession * session = [_networkManager valueForKey:@"session"];
+    if ([session isKindOfClass:[NSURLSession class]]) {
+        [session finishTasksAndInvalidate];
+    }
+}
 
 - (instancetype)init {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
