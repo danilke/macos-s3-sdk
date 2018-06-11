@@ -1,5 +1,5 @@
 # AWS Mobile SDK for iOS CHANGELOG
-## 2.6.11
+## 2.6.21
 
 ### New Features
 
